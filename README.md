@@ -1,0 +1,96 @@
+[![tests](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml/badge.svg)](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
+
+# ddev-xhgui <!-- omit in toc -->
+
+- [Introduction](#introduction)
+- [Warning](#warning)
+- [Getting started](#getting-started)
+- [Framework configuration](#framework-configuration)
+  - [Drupal 8+](#drupal-8)
+  - [Wordpress](#wordpress)
+- [Usage](#usage)
+
+## Introduction
+
+This addon is designed to add the XHGui service to a project served by DDEV.
+
+[XhGui](https://github.com/perftools/xhgui) is a graphical interface for XHProf profiling data that can store the results in MongoDB or PDO database.
+
+## Warning
+
+This addon is intended for debugging in a development environment.
+Profiling in a production environment is not recommend.
+
+## Getting started
+
+- Install the `ddev-xhgui` add-on:
+
+  ```shell
+  ddev get tyler36/ddev-xhgui
+  ddev restart
+  ```
+
+- Install a profiler. If your application uses composer, you can install it with
+
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+## Framework configuration
+
+### Drupal 8+
+
+The `xhgui/examples` contains files which can be used to quick-start a Drupal installation.
+
+- Copy the files from `xhgui/examples` to the sites's `web/sites/default` folder.
+
+- Add the following line to `web/sites/default/settings.php` to include the collector.
+
+   ```php
+   require_once __DIR__ . '/xhgui.collector.php';
+   ```
+
+You can update `web/sites/default/settings.ddev.php` instead, however this file will be overwritten when DDEV restarts unless you remove `#ddev-generated` from the top of the file.
+
+- Comment out the above line to disable profiling.
+
+### Wordpress
+
+Download latest version of `perftools/php-profiler` (this has been validated with the current latest release, 0.18.0).
+If you use [bedrock](https://roots.io/bedrock/), just use the composer command from the previous section.
+
+If you use vanilla WordPress:
+
+   ```shell
+   wget https://github.com/perftools/php-profiler/archive/refs/tags/0.18.0.tar.gz
+   tar -xvf 0.18.0.tar.gz
+   ```
+
+- Copy the two files in the `.ddev/xhgui/examples` folder (not the `php-profiler` you just downloaded) to your WordPress folder, and append to your `wp-config-ddev.php`:
+
+   ```php
+   require_once __DIR__ . '/php-profiler-0.18.0/autoload.php';
+   require_once __DIR__ . '/xhgui.collector.php';
+   ```
+
+- Comment out the above line to disable profiling.
+
+If you want to stop profiling, you can just comment/remove those lines.
+
+Take into account that with the default configuration, every time you `ddev start`, DDEV will recreate this file. You can remove the `#ddev-generated` at the top of the file if you want to avoid that.
+
+## Usage
+
+The service will automatically start when run: `ddev start` or `ddev restart`.
+
+By default, xhgui will be available at  <http://>`<your site>`:8282. Note that it's http only.
+
+Remember, if you updated `settings.ddev.php` or `wp-config-ddev.php`, these file will be overwritten unless you remove the `#ddev-generated`.
+
+Use the following command to check the logs:
+
+   ```shell
+   ddev logs -s xhgui
+   ```
+
+**Contributed and maintained by [@tyler36](https://github.com/tyler36) based on the original [ddev-contrib PR](https://github.com/ddev/ddev-contrib/pull/128) by [@penyaskito](https://github.com/penyaskito)**

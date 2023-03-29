@@ -1,0 +1,43 @@
+#ddev-generated
+services:
+  xhgui:
+    # https://hub.docker.com/r/xhgui/xhgui/tags
+    image: xhgui/xhgui:latest
+    container_name: ddev-${DDEV_SITENAME}-xhgui
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    restart: always
+    volumes:
+      - ./xhgui/nginx.conf:/etc/nginx/http.d/default.conf:ro
+      - ./xhgui/xhgui.config.php:/var/www/xhgui/config/config.php
+    environment:
+      - XHGUI_MONGO_HOSTNAME=xhgui-mongo
+      - XHGUI_MONGO_DATABASE=xhprof
+    ports:
+      - "8142:80"
+    links:
+      - xhgui-mongo
+
+  web:
+    links:
+      - xhgui
+    depends_on:
+      - xhgui
+
+  xhgui-mongo:
+    # https://hub.docker.com/r/percona/percona-server-mongodb/tags
+    image: percona/percona-server-mongodb:3.6
+    container_name: ddev-${DDEV_SITENAME}-xhgui-mongo
+    command: --storageEngine=wiredTiger
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=xhprof
+    volumes:
+      - ./xhgui-mongo/mongo.init.d:/docker-entrypoint-initdb.d
+      - xhgui-mongo:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  xhgui-mongo:
