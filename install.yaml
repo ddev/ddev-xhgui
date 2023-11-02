@@ -61,4 +61,3 @@ project_files:
 - xhgui/examples/xhgui.collector.config.php
 - xhgui/examples/xhgui.collector.php
 - xhgui/nginx.conf
-- xhgui-mongo/xhgui.js
