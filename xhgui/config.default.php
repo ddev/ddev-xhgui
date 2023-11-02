@@ -1,4 +1,5 @@
 <?php
+#ddev-generated
 /**
  * Default configuration for Xhgui
  */
