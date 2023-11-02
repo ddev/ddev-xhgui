@@ -61,3 +61,4 @@ project_files:
 - xhgui/examples/xhgui.collector.config.php
 - xhgui/examples/xhgui.collector.php
 - xhgui/nginx.conf
+- xhprof/xhprof_prepend.php
