@@ -83,7 +83,7 @@ Take into account that with the default configuration, every time you `ddev star
 
 The service will automatically start when run: `ddev start` or `ddev restart`.
 
-By default, xhgui will be available at  <http://>`<your site>`:8282. Note that it's http only.
+By default, xhgui will be available at  <https://>`<your site>`:8143.
 
 Remember, if you updated `settings.ddev.php` or `wp-config-ddev.php`, these file will be overwritten unless you remove the `#ddev-generated`.
 
