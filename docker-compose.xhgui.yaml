@@ -27,7 +27,7 @@ services:
 
   xhgui-mongo:
     # https://hub.docker.com/r/percona/percona-server-mongodb/tags
-    image: percona/percona-server-mongodb:6
+    image: percona/percona-server-mongodb:6.0
     container_name: ddev-${DDEV_SITENAME}-xhgui-mongo
     command: --storageEngine=wiredTiger
     restart: always
