@@ -57,6 +57,7 @@ pre_install_actions:
 # DDEV environment variables can be interpolated into these filenames
 project_files:
 - docker-compose.xhgui.yaml
+- xhgui/Dockerfile
 - xhgui/xhgui.config.php
 - xhgui/examples/xhgui.collector.config.php
 - xhgui/examples/xhgui.collector.php
