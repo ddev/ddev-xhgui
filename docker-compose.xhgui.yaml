@@ -2,7 +2,9 @@
 services:
   xhgui:
     # https://hub.docker.com/r/xhgui/xhgui/tags
-    image: xhgui/xhgui:latest
+    build:
+      dockerfile: Dockerfile
+      context: xhgui
     container_name: ddev-${DDEV_SITENAME}-xhgui
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
