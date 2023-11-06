@@ -2,7 +2,9 @@
 services:
   xhgui:
     # https://hub.docker.com/r/xhgui/xhgui/tags
-    image: xhgui/xhgui:latest
+    build:
+      dockerfile: Dockerfile
+      context: xhgui
     container_name: ddev-${DDEV_SITENAME}-xhgui
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
@@ -12,11 +14,14 @@ services:
       - ./xhgui/nginx.conf:/etc/nginx/http.d/default.conf:ro
       - ./xhgui/xhgui.config.php:/var/www/xhgui/config/config.php
     environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=8142:80
+      - HTTPS_EXPOSE=8143:80
       - XHGUI_MONGO_HOSTNAME=xhgui-mongo
       - XHGUI_MONGO_DATABASE=xhprof
-    ports:
-      - "8142:80"
     links:
+      - xhgui-mongo
+    depends_on:
       - xhgui-mongo
 
   web:
@@ -27,7 +32,7 @@ services:
 
   xhgui-mongo:
     # https://hub.docker.com/r/percona/percona-server-mongodb/tags
-    image: percona/percona-server-mongodb:3.6
+    image: percona/percona-server-mongodb:6.0-multi
     container_name: ddev-${DDEV_SITENAME}-xhgui-mongo
     command: --storageEngine=wiredTiger
     restart: always
