@@ -1,5 +1,6 @@
 <?php
 
+#ddev-generated
 /**
  * @file
  */
