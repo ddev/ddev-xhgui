@@ -1,9 +1,5 @@
 name: xhgui
 
-pre_install_actions:
-- |
-  mkdir -p ${DDEV_APPROOT}/.ddev/xhgui-mongo/mongo.init.d
-
 project_files:
 - docker-compose.xhgui.yaml
 - xhgui/Dockerfile
