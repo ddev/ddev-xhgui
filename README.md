@@ -22,6 +22,8 @@ This addon is designed to add the XHGui service to a project served by DDEV.
 This addon is intended for debugging in a development environment.
 Profiling in a production environment is not recommend.
 
+It's therefore wise to add `xhgui.collector.php` and `xhgui.collector.config.php` to your `.gitignore` so it won't accidentally deploy to your production website.
+
 ## Getting started
 
 - Install the `ddev-xhgui` add-on:
