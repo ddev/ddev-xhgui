@@ -31,15 +31,15 @@ Profiling in a production environment is not recommended.
   ddev restart
   ```
 
+## Framework configuration
+
+### Drupal
+
 - Install `perftools/php-profiler`
 
    ```shell
    ddev composer require perftools/php-profiler --dev
    ```
-
-## Framework configuration
-
-### Drupal
 
 - Add the following line to `web/sites/default/settings.php` to include the collector.
 
@@ -50,20 +50,25 @@ Profiling in a production environment is not recommended.
    ```
 
 - Run `ddev xhprof` to start profiling.
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ### WordPress
 
-Download latest version of `perftools/php-profiler` (validated with the current latest release, 0.18.0).
-If you use [bedrock](https://roots.io/bedrock/), use the composer command from the previous section.
+- Install `perftools/php-profiler`
+  - If using [bedrock](https://roots.io/bedrock/)
 
-If you use vanilla WordPress:
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+  - If using vanilla WordPress:
 
    ```shell
    wget https://github.com/perftools/php-profiler/archive/refs/tags/0.18.0.tar.gz
    tar -xvf 0.18.0.tar.gz
    ```
 
-- Copy the two files in the `.ddev/xhgui/examples` folder to your WordPress folder, and append to your `wp-config-ddev.php`:
+- Add the following line to `wp-config-ddev.php` to include the collector.
 
    ```php
    require_once __DIR__ . '/php-profiler-0.18.0/autoload.php';
@@ -72,18 +77,19 @@ If you use vanilla WordPress:
    }
    ```
 
-- Comment out the above line to disable profiling.
-
-To disable profiling, comment/remove those lines.
-
-Remove the `#ddev-generated` at the top of the file to avoid that.
+- Remove `#ddev-generated` from `wp-config-ddev.php` to prevent DDEV overriding it.
+- Run `ddev xhprof` to start profiling
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ### Silverstripe
 
-Add/install `perftools/php-profiler`, as per [getting started](#getting-started)
+- Install `perftools/php-profiler`
 
-- Copy the files from `.ddev/xhgui/examples` folder to your `public` folder (`cp .ddev/xhgui/examples/*.php public/`)
-- Add the requirement to your `public/index.php`, right after the autoload includes:
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+- Add the following line to `public/index.php`, right after the autoload includes, to include the collector.
 
   ```php
   if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
@@ -101,7 +107,7 @@ Add/install `perftools/php-profiler`, as per [getting started](#getting-started)
   ```
 
 - Run `ddev xhprof` to start profiling
-- XHGui is now available at `https://yourproject.ddev.site:8142`
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ## Usage
 
