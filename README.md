@@ -6,9 +6,9 @@
 - [Warning](#warning)
 - [Getting started](#getting-started)
 - [Framework configuration](#framework-configuration)
-  - [Drupal 8+](#drupal-8)
-  - [Wordpress](#wordpress)
-  - [Silverstripe](#silverstripe)
+   - [Drupal 8+](#drupal-8)
+   - [Wordpress](#wordpress)
+   - [Silverstripe](#silverstripe)
 - [Usage](#usage)
 
 ## Introduction
@@ -86,6 +86,7 @@ Add/install `perftools/php-profiler`, as per [getting started](#getting-started)
 
 - Copy the files from `.ddev/xhgui/examples` folder to your `public` folder (`cp .ddev/xhgui/examples/*.php public/`)
 - Add the requirement to your `public/index.php`, right after the autoload includes:
+
   ```php
   if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require __DIR__ . '/../vendor/autoload.php';
@@ -100,10 +101,10 @@ Add/install `perftools/php-profiler`, as per [getting started](#getting-started)
     require_once __DIR__ . '/xhgui.collector.php';
   }
   ```
+
 - Run `ddev xhprof` to start profiling
 - XHGui is now available at <https://>`yourproject.ddev.site`:8142
 
-  
 ## Usage
 
 The service will automatically start when run: `ddev start` or `ddev restart`.
