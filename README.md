@@ -107,7 +107,7 @@ Add/install `perftools/php-profiler`, as per [getting started](#getting-started)
 
 The service will automatically start when run: `ddev start` or `ddev restart`.
 
-By default, xhgui will be available at  <https://>`<your site>`:8143.
+By default, xhgui will be available at <https://>`<your site>`:8143.
 
 Remember, if you updated `settings.ddev.php` or `wp-config-ddev.php`, these file will be overwritten unless you remove the `#ddev-generated`.
 
