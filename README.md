@@ -74,7 +74,7 @@ If you use vanilla WordPress:
 
 - Comment out the above line to disable profiling.
 
-To stop profiling, comment/remove those lines.
+To disable profiling, comment/remove those lines.
 
 Take into account that with the default configuration, every time you `ddev start`, DDEV will recreate this file. Remove the `#ddev-generated` at the top of the file to avoid that.
 
