@@ -101,7 +101,7 @@ Add/install `perftools/php-profiler`, as per [getting started](#getting-started)
   ```
 
 - Run `ddev xhprof` to start profiling
-- XHGui is now available at <https://>`yourproject.ddev.site`:8142
+- XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ## Usage
 
