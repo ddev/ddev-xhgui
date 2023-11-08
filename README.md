@@ -6,7 +6,7 @@
 - [Warning](#warning)
 - [Getting started](#getting-started)
 - [Framework configuration](#framework-configuration)
-   - [Drupal 8+](#drupal-8)
+   - [Drupal](#drupal)
    - [WordPress](#wordpress)
    - [Silverstripe](#silverstripe)
 - [Usage](#usage)
@@ -39,7 +39,7 @@ Profiling in a production environment is not recommended.
 
 ## Framework configuration
 
-### Drupal 8+
+### Drupal
 
 The `xhgui/examples` contains files to quick-start a Drupal installation configuration.
 
