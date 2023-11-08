@@ -45,7 +45,7 @@ The `xhgui/examples` contains files which can be used to quick-start a Drupal in
 
 - Copy the files from `xhgui/examples` to the sites's `web/sites/default` folder.
 
-- Add the following line to `web/sites/default/settings.php` to include the collector.
+- Add the following line to `web/sites/default/settings.local.php` to include the collector.
 
    ```php
    require_once __DIR__ . '/xhgui.collector.php';
