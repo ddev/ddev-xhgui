@@ -51,8 +51,6 @@ The `xhgui/examples` contains files which can be used to quick-start a Drupal in
    require_once __DIR__ . '/xhgui.collector.php';
    ```
 
-You can update `web/sites/default/settings.ddev.php` instead, however this file will be overwritten when DDEV restarts unless you remove `#ddev-generated` from the top of the file.
-
 - Comment out the above line to disable profiling.
 
 ### Wordpress
