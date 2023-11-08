@@ -20,7 +20,7 @@ This addon adds the XHGui service to a project served by DDEV.
 ## Warning
 
 This addon is for debugging in a development environment.
-Profiling in a production environment is not recommend.
+Profiling in a production environment is not recommended.
 
 ## Getting started
 
