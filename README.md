@@ -41,14 +41,12 @@ Profiling in a production environment is not recommended.
 
 ### Drupal
 
-The `xhgui/examples` contains files to quick-start a Drupal installation configuration.
-
-- Copy the files from `xhgui/examples` to the sites's `web/sites/default` folder.
-
 - Add the following line to `web/sites/default/settings.local.php` to include the collector.
 
    ```php
-   require_once __DIR__ . '/xhgui.collector.php';
+   if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+    require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+   }
    ```
 
 - Run `ddev xhprof` to start profiling.
@@ -69,7 +67,9 @@ If you use vanilla WordPress:
 
    ```php
    require_once __DIR__ . '/php-profiler-0.18.0/autoload.php';
-   require_once __DIR__ . '/xhgui.collector.php';
+   if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+     require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+   }
    ```
 
 - Comment out the above line to disable profiling.
@@ -95,8 +95,8 @@ Add/install `perftools/php-profiler`, as per [getting started](#getting-started)
       echo "autoload.php not found";
       exit(1);
   }
-  if (file_exists(__DIR__ . '/xhgui.collector.php')) {
-    require_once __DIR__ . '/xhgui.collector.php';
+  if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+   require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
   }
   ```
 
