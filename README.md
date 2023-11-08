@@ -13,13 +13,13 @@
 
 ## Introduction
 
-This addon is designed to add the XHGui service to a project served by DDEV.
+This addon adds the XHGui service to a project served by DDEV.
 
 [XhGui](https://github.com/perftools/xhgui) is a graphical interface for XHProf profiling data that can store the results in MongoDB or PDO database.
 
 ## Warning
 
-This addon is intended for debugging in a development environment.
+This addon is for debugging in a development environment.
 Profiling in a production environment is not recommend.
 
 ## Getting started
@@ -31,7 +31,7 @@ Profiling in a production environment is not recommend.
   ddev restart
   ```
 
-- Install a profiler. If your application uses composer, you can install it with
+- Install `perftools/php-profiler`
 
    ```shell
    ddev composer require perftools/php-profiler --dev
@@ -41,7 +41,7 @@ Profiling in a production environment is not recommend.
 
 ### Drupal 8+
 
-The `xhgui/examples` contains files which can be used to quick-start a Drupal installation.
+The `xhgui/examples` contains files to quick-start a Drupal installation configuration.
 
 - Copy the files from `xhgui/examples` to the sites's `web/sites/default` folder.
 
@@ -51,12 +51,12 @@ The `xhgui/examples` contains files which can be used to quick-start a Drupal in
    require_once __DIR__ . '/xhgui.collector.php';
    ```
 
-- Comment out the above line to disable profiling.
+- Run `ddev xhprof` to start profiling.
 
 ### WordPress
 
-Download latest version of `perftools/php-profiler` (this has been validated with the current latest release, 0.18.0).
-If you use [bedrock](https://roots.io/bedrock/), just use the composer command from the previous section.
+Download latest version of `perftools/php-profiler` (validated with the current latest release, 0.18.0).
+If you use [bedrock](https://roots.io/bedrock/), use the composer command from the previous section.
 
 If you use vanilla WordPress:
 
@@ -65,7 +65,7 @@ If you use vanilla WordPress:
    tar -xvf 0.18.0.tar.gz
    ```
 
-- Copy the two files in the `.ddev/xhgui/examples` folder (not the `php-profiler` you just downloaded) to your WordPress folder, and append to your `wp-config-ddev.php`:
+- Copy the two files in the `.ddev/xhgui/examples` folder to your WordPress folder, and append to your `wp-config-ddev.php`:
 
    ```php
    require_once __DIR__ . '/php-profiler-0.18.0/autoload.php';
@@ -74,9 +74,9 @@ If you use vanilla WordPress:
 
 - Comment out the above line to disable profiling.
 
-If you want to stop profiling, you can just comment/remove those lines.
+To stop profiling, comment/remove those lines.
 
-Take into account that with the default configuration, every time you `ddev start`, DDEV will recreate this file. You can remove the `#ddev-generated` at the top of the file if you want to avoid that.
+Take into account that with the default configuration, every time you `ddev start`, DDEV will recreate this file. Remove the `#ddev-generated` at the top of the file to avoid that.
 
 ### Silverstripe
 
