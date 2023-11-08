@@ -7,7 +7,7 @@
 - [Getting started](#getting-started)
 - [Framework configuration](#framework-configuration)
    - [Drupal 8+](#drupal-8)
-   - [Wordpress](#wordpress)
+   - [WordPress](#wordpress)
    - [Silverstripe](#silverstripe)
 - [Usage](#usage)
 
@@ -53,7 +53,7 @@ The `xhgui/examples` contains files which can be used to quick-start a Drupal in
 
 - Comment out the above line to disable profiling.
 
-### Wordpress
+### WordPress
 
 Download latest version of `perftools/php-profiler` (this has been validated with the current latest release, 0.18.0).
 If you use [bedrock](https://roots.io/bedrock/), just use the composer command from the previous section.
