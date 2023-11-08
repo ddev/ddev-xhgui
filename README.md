@@ -41,7 +41,7 @@ Profiling in a production environment is not recommended.
 
 ### Drupal
 
-- Add the following line to `web/sites/default/settings.local.php` to include the collector.
+- Add the following line to `web/sites/default/settings.php` to include the collector.
 
    ```php
    if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
