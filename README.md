@@ -6,9 +6,9 @@
 - [Warning](#warning)
 - [Getting started](#getting-started)
 - [Framework configuration](#framework-configuration)
-   - [Drupal](#drupal)
-   - [WordPress](#wordpress)
-   - [Silverstripe](#silverstripe)
+  - [Drupal](#drupal)
+  - [WordPress](#wordpress)
+  - [Silverstripe](#silverstripe)
 - [Usage](#usage)
 
 ## Introduction
@@ -116,6 +116,10 @@ Profiling in a production environment is not recommended.
 The service will automatically start when run: `ddev start` or `ddev restart`.
 
 By default, xhgui will be available at `https://yourproject.ddev.site:8143`.
+
+For detailed information about a single request, click on the "Method" keyword on the "Recent runs" dashboard.
+
+![Click GET method](./images/xhgui-get.png)
 
 Remember, if you updated `settings.ddev.php` or `wp-config-ddev.php`, these file will be overwritten unless you remove the `#ddev-generated`.
 
