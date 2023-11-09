@@ -17,6 +17,8 @@ This addon adds the XHGui service to a project served by DDEV.
 
 [XhGui](https://github.com/perftools/xhgui) is a graphical interface for XHProf profiling data that can store the results in MongoDB or PDO database.
 
+See <https://performance.wikimedia.org/xhgui/> for an demonstration of XHGui data collection.
+
 ## Warning
 
 This addon is for debugging in a development environment.
