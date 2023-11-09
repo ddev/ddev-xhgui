@@ -116,6 +116,11 @@ Profiling in a production environment is not recommended.
 The service will automatically start when run: `ddev start` or `ddev restart`.
 
 By default, xhgui will be available at `https://yourproject.ddev.site:8143`.
+Use the following command to launch the xhgui in your browser:
+
+```shell
+ddev xhgui
+```
 
 For detailed information about a single request, click on the "Method" keyword on the "Recent runs" dashboard.
 

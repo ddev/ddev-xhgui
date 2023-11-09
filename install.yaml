@@ -2,6 +2,7 @@ name: xhgui
 
 project_files:
 - docker-compose.xhgui.yaml
+- commands/host/xhgui
 - xhgui/Dockerfile
 - xhgui/xhgui.config.php
 - xhgui/collector/xhgui.collector.config.php
