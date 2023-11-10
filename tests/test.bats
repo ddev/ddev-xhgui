@@ -33,6 +33,7 @@ collector_checks() {
 
   # Profile site
   ddev exec "curl -s web:80" | grep "Demo website"
+  sleep 5
   # Ensure there a profiling data link
   ddev exec "curl -s xhgui:80" | grep '<a href="/?server_name=web">'
 }
