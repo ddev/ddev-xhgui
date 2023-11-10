@@ -10,6 +10,7 @@
   - [WordPress](#wordpress)
   - [Silverstripe](#silverstripe)
 - [Usage](#usage)
+- [Configuration](#configuration)
 
 ## Introduction
 
@@ -133,5 +134,19 @@ Use the following command to check the logs:
    ```shell
    ddev logs -s xhgui
    ```
+
+## Configuration
+
+To configure Xhgui, update `.ddev/xhgui/xhgui.config.php`.
+
+For example, to set xhgui to use `Asia/Toyko` timezone for dates:
+
+- Remove `#ddev-generated` from `.ddev/xhgui/xhgui.config.php`
+- Change the timezone value
+
+  ```php
+    'timezone' => 'Asia/Tokyo',
+    'date.format' => 'Y-m-d H:i:s',
+  ```
 
 **Contributed and maintained by [@tyler36](https://github.com/tyler36) based on the original [ddev-contrib PR](https://github.com/ddev/ddev-contrib/pull/128) by [@penyaskito](https://github.com/penyaskito)**
