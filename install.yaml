@@ -10,3 +10,7 @@ project_files:
 - xhgui/nginx.conf
 - xhprof/xhprof_prepend.php
 - xhgui-mongo/mongo.init.d
+
+post_install_actions:
+  - echo "⚠️  You must force-add .ddev/xhprof/xhprof_prepend.php to version control:"
+  - echo "  git add -f .ddev/xhprof/xhprof_prepend.php"
