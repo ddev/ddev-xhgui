@@ -68,7 +68,7 @@ collector_checks() {
   echo "# Create a demo website at ${TESTDIR}" >&3
   ddev composer require perftools/php-profiler
   ddev composer install
-  mkdir -p ${TESTDIR}/public
+  ddev config --docroot=public --create-docroot
   echo "<?php
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
