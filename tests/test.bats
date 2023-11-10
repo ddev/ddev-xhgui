@@ -24,6 +24,19 @@ health_checks() {
   ddev exec "curl -s xhgui:80" | grep "XHGui - Run list"
 }
 
+# This tests the collector function works.
+collector_checks() {
+  # Turn on the collector
+  ddev xhprof
+  # Ensure there's no profiling data link
+  ddev exec "curl -s xhgui:80" | grep -v '<a href="/?server_name=web">'
+
+  # Profile site
+  ddev exec "curl -s web:80" | grep "Demo website"
+  # Ensure there a profiling data link
+  ddev exec "curl -s xhgui:80" | grep '<a href="/?server_name=web">'
+}
+
 @test "install from directory" {
   set -eu -o pipefail
   cd ${TESTDIR}
@@ -44,4 +57,27 @@ health_checks() {
 
   # Check service works
   health_checks
+}
+
+@test "a site can be profiled" {
+  set -eu -o pipefail
+  cd ${TESTDIR}
+
+  # Create test site
+  echo "# Create a demo website at ${TESTDIR}" >&3
+  ddev composer require perftools/php-profiler
+  ddev composer install
+  mkdir -p ${TESTDIR}/public
+  echo "<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
+echo 'Demo website';" >${TESTDIR}/public/index.php
+
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ${DIR}
+  ddev restart
+
+  # Check service works
+  health_checks
+  collector_checks
 }
