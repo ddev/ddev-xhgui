@@ -44,8 +44,8 @@ services:
     volumes:
       - ./xhgui-mongo/mongo.init.d:/docker-entrypoint-initdb.d
       - xhgui-mongo:/data/db
-    ports:
-      - "27017:27017"
+    expose:
+      - "27017"
 
 volumes:
   xhgui-mongo:
