@@ -42,6 +42,7 @@ collector_checks() {
   set -eu -o pipefail
   cd ${TESTDIR}
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ddev/ddev-mongo
   ddev get ${DIR}
   ddev restart
 
@@ -53,6 +54,7 @@ collector_checks() {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
   echo "# ddev get tyler36/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ddev/ddev-mongo
   ddev get tyler36/ddev-xhgui
   ddev restart
 
@@ -75,6 +77,7 @@ require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
 echo 'Demo website';" >${TESTDIR}/public/index.php
 
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ddev/ddev-mongo
   ddev get ${DIR}
   ddev restart
 

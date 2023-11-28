@@ -10,3 +10,6 @@ project_files:
 - xhgui/nginx.conf
 - xhprof/xhprof_prepend.php
 - xhgui-mongo/mongo.init.d
+
+dependencies:
+  - ddev/ddev-mongo

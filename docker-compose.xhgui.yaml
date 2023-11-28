@@ -17,12 +17,12 @@ services:
       - VIRTUAL_HOST=$DDEV_HOSTNAME
       - HTTP_EXPOSE=8142:80
       - HTTPS_EXPOSE=8143:80
-      - XHGUI_MONGO_HOSTNAME=xhgui-mongo
+      - XHGUI_MONGO_HOSTNAME=mongo
       - XHGUI_MONGO_DATABASE=xhprof
     links:
-      - xhgui-mongo
+      - mongo
     depends_on:
-      - xhgui-mongo
+      - mongo
 
   web:
     links:
@@ -30,22 +30,9 @@ services:
     depends_on:
       - xhgui
 
-  xhgui-mongo:
-    # https://hub.docker.com/r/percona/percona-server-mongodb/tags
-    image: percona/percona-server-mongodb:6.0-multi
-    container_name: ddev-${DDEV_SITENAME}-xhgui-mongo
-    command: --storageEngine=wiredTiger
-    restart: always
-    labels:
-      com.ddev.site-name: ${DDEV_SITENAME}
-      com.ddev.approot: $DDEV_APPROOT
-    environment:
-      - MONGO_INITDB_DATABASE=xhprof
+  mongo:
     volumes:
       - ./xhgui-mongo/mongo.init.d:/docker-entrypoint-initdb.d
-      - xhgui-mongo:/data/db
-    expose:
-      - "27017"
-
+      - mongo:/data/db
 volumes:
-  xhgui-mongo:
+  mongo:

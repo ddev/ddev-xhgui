@@ -24,18 +24,16 @@ return [
     // Database options for MongoDB.
     'mongodb' => [
         // 'hostname' and 'port' are used to build DSN for MongoClient
-        'hostname' => getenv('XHGUI_MONGO_HOSTNAME') ?: 'xhgui-mongo',
+        'hostname' => getenv('XHGUI_MONGO_HOSTNAME') ?: 'mongo',
         'port' => getenv('XHGUI_MONGO_PORT') ?: 27017,
         // The database name
-        'database' => getenv('XHGUI_MONGO_DATABASE') ?: 'xhprof',
+        'database' => getenv('XHGUI_MONGO_DATABASE') ?: 'db',
         // Additional options for the MongoClient constructor,
         // for example 'username', 'password', or 'replicaSet'.
         // See <https://www.php.net/mongoclient_construct#options>.
         'options' => [
-            /*
-            'username' => getenv('XHGUI_MONGO_USERNAME') ?: null,
-            'password' => getenv('XHGUI_MONGO_PASSWORD') ?: null,
-            */
+            'username' => getenv('XHGUI_MONGO_USERNAME') ?: 'db',
+            'password' => getenv('XHGUI_MONGO_PASSWORD') ?: 'db',
         ],
         // An array of options for the MongoDB driver.
         // Options include setting connection context options for SSL or logging callbacks.
