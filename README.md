@@ -27,9 +27,10 @@ Profiling in a production environment is not recommended.
 
 ## Getting started
 
-- Install the `ddev-xhgui` add-on:
+- Install the `ddev-mongo` and `ddev-xhgui` add-ons:
 
   ```shell
+  ddev get ddev/ddev-mongo
   ddev get tyler36/ddev-xhgui
   ddev restart
   ```
