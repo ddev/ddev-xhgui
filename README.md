@@ -105,16 +105,10 @@ Profiling in a production environment is not recommended.
   ```
 
 ## Usage
-Make sure your project is started then use the following command to enable profiling.
+Run the following commands to enable profiling and then launch the XHGui in your browser.
 
 ```shell
-ddev xhprof
-```
-
-Next use the following command to launch the XHGui in your browser:
-
-```shell
-ddev xhgui
+ddev xhprof on && ddev xhgui
 ```
 
 By default, XHGui will be available at `https://yourproject.ddev.site:8143`.
