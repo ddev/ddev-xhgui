@@ -9,7 +9,7 @@ services:
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
-    restart: always
+    restart: never
     volumes:
       - ./xhgui/nginx.conf:/etc/nginx/http.d/default.conf:ro
       - ./xhgui/xhgui.config.php:/var/www/xhgui/config/config.php
@@ -35,9 +35,9 @@ services:
     image: percona/percona-server-mongodb:6.0-multi
     container_name: ddev-${DDEV_SITENAME}-xhgui-mongo
     command: --storageEngine=wiredTiger
-    restart: always
+    restart: never
     labels:
-      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.site-name: ${DDEV_SITENAME}Z
       com.ddev.approot: $DDEV_APPROOT
     environment:
       - MONGO_INITDB_DATABASE=xhprof
@@ -45,7 +45,7 @@ services:
       - ./xhgui-mongo/mongo.init.d:/docker-entrypoint-initdb.d
       - xhgui-mongo:/data/db
     expose:
-      - "27017"
+      - '27017'
 
 volumes:
   xhgui-mongo:
