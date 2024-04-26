@@ -19,6 +19,8 @@ services:
       - HTTPS_EXPOSE=8143:80
       - XHGUI_SAVE_HANDLER=pdo
       - XHGUI_PDO_DSN=${DDEV_DATABASE_FAMILY}:host=db;dbname=xhgui
+      # If using pgsql database, use the below line instead and remove "#ddev-generated" from top of file
+      # - XHGUI_PDO_DSN=pgsql:host=db;dbname=xhgui
       - XHGUI_PDO_USER=db
       - XHGUI_PDO_PASS=db
     links:
