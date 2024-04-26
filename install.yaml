@@ -9,4 +9,3 @@ project_files:
 - xhgui/collector/xhgui.collector.php
 - xhgui/nginx.conf
 - xhprof/xhprof_prepend.php
-- xhgui-mongo/mongo.init.d
