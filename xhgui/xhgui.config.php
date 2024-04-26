@@ -14,7 +14,7 @@ return [
 
     // Database options for PDO.
     'pdo' => [
-        'dsn' => getenv('XHGUI_PDO_DSN') ?: 'mysql:host=db;dbname=db',
+        'dsn' => getenv('XHGUI_PDO_DSN') ?: 'mysql:host=db;dbname=xhgui',
         'user' => getenv('XHGUI_PDO_USER') ?: 'db',
         'pass' => getenv('XHGUI_PDO_PASS') ?: 'db',
         'table' => getenv('XHGUI_PDO_TABLE') ?: 'results',

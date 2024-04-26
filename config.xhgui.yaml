@@ -1,0 +1,5 @@
+#ddev-generated
+hooks:
+  post-start:
+  - exec: mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS xhgui; GRANT ALL ON xhgui.* to 'db'@'%';"
+    service: db

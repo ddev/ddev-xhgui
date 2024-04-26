@@ -18,7 +18,7 @@ services:
       - HTTP_EXPOSE=8142:80
       - HTTPS_EXPOSE=8143:80
       - XHGUI_SAVE_HANDLER=pdo
-      - XHGUI_PDO_DSN=${DDEV_DATABASE_FAMILY}:host=db;dbname=db
+      - XHGUI_PDO_DSN=${DDEV_DATABASE_FAMILY}:host=db;dbname=xhgui
       - XHGUI_PDO_USER=db
       - XHGUI_PDO_PASS=db
     links:
