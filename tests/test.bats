@@ -80,6 +80,11 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   # Check service works
   health_checks
   collector_checks
+
+  # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
+  ddev get --remove ${DIR}
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
 @test "it can profile using a MySQL database" {
@@ -103,6 +108,11 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   # Check service works
   health_checks
   collector_checks
+
+  # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
+  ddev get --remove ${DIR}
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
 @test "it can profile using a Postres database" {
@@ -126,4 +136,9 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   # Check service works
   health_checks
   collector_checks
+
+  # Check it removes database on uninstall. `psql "xhgui" -c '\q'` returns 1 if db exists, 0 if missing.
+  ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." | grep "exists"
+  ddev get --remove ${DIR}
+  ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
