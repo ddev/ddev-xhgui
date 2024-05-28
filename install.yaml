@@ -9,7 +9,6 @@ project_files:
 - xhgui/collector/xhgui.collector.config.php
 - xhgui/collector/xhgui.collector.php
 - xhgui/nginx.conf
-- xhprof/xhprof_prepend.php
 
 removal_actions:
 - if [[ "$DDEV_DATABASE_FAMILY" == "postgres" ]]; then ddev psql -U db -c "drop database xhgui"; fi

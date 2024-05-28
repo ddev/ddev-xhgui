@@ -9,3 +9,21 @@ hooks:
         mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS xhgui; GRANT ALL ON xhgui.* to 'db'@'%';"
       fi
     service: db
+  - exec: |
+      cat <<-EOF > .ddev/xhprof/xhprof_prepend.php
+      <?php
+      // DDEV's built in xhprof handler breaks our own.
+      // We'll temporarily override it here, but return control back later.
+      // If you don't want this behavior, comment out the hooks in ".ddev/config.xhgui.yaml".
+      return;
+      EOF
+  pre-stop:
+  - exec: |
+      cat <<-EOF > .ddev/xhprof/xhprof_prepend.php
+      <?php
+      // #ddev-generated
+      // We'll give back control of this file to DDEV. Next time it checks, it will see it has ownership
+      // and override this file with the current default.
+      // If you don't want this behavior, comment out the hooks in .ddev/config.xhgui.yaml.
+      return;
+      EOF
