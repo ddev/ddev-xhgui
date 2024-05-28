@@ -7,6 +7,11 @@
  * and return an array from there with your overriding settings.
  */
 
+$DDEV_DATABASE_FAMILY = getenv('DDEV_DATABASE_FAMILY', 'mysql');
+$XHGUI_PDO_DSN = $DDEV_DATABASE_FAMILY === 'postgres'
+    ? 'pgsql:host=db;dbname=xhgui'
+    : "$DDEV_DATABASE_FAMILY:host=db;dbname=xhgui";
+
 return [
     // Which backend to use for Xhgui_Saver.
     // Must be one of 'mongodb', or 'pdo'.
@@ -14,9 +19,9 @@ return [
 
     // Database options for PDO.
     'pdo' => [
-        'dsn' => getenv('XHGUI_PDO_DSN') ?: null,
-        'user' => getenv('XHGUI_PDO_USER') ?: null,
-        'pass' => getenv('XHGUI_PDO_PASS') ?: null,
+        'dsn' => $XHGUI_PDO_DSN,
+        'user' => getenv('XHGUI_PDO_USER') ?: 'db',
+        'pass' => getenv('XHGUI_PDO_PASS') ?: 'db',
         'table' => getenv('XHGUI_PDO_TABLE') ?: 'results',
         'tableWatch' => getenv('XHGUI_PDO_TABLE_WATCHES') ?: 'watches',
     ],

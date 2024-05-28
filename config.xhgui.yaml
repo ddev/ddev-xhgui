@@ -1,0 +1,11 @@
+#ddev-generated
+hooks:
+  post-start:
+  # Create a new database called "xhgui"
+  - exec: |
+      if [[ "$DDEV_DATABASE_FAMILY" == "postgres" ]]; then
+        echo "SELECT 'CREATE DATABASE xhgui' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'xhgui')\gexec" | psql > /dev/null
+      else
+        mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS xhgui; GRANT ALL ON xhgui.* to 'db'@'%';"
+      fi
+    service: db

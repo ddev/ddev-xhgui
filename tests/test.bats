@@ -2,15 +2,12 @@ setup() {
   set -eu -o pipefail
 
   export DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )/.."
-  export TESTDIR=~/tmp/ddev-xhgui
+  export PROJNAME=test-ddev-xhgui
+  export TESTDIR=~/tmp/${PROJNAME}
   mkdir -p $TESTDIR
-  export PROJNAME=ddev-xhgui
   export DDEV_NON_INTERACTIVE=true
   ddev delete -Oy ${PROJNAME} || true
   cd "${TESTDIR}"
-  ddev config --project-name=${PROJNAME}
-  ddev start -y
-  echo "# ddev started at $(date)" >&3
 }
 
 teardown() {
@@ -41,6 +38,7 @@ collector_checks() {
 @test "install from directory" {
   set -eu -o pipefail
   cd ${TESTDIR}
+  ddev config --project-name=${PROJNAME}
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
   ddev restart
@@ -52,6 +50,7 @@ collector_checks() {
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
+  ddev config --project-name=${PROJNAME}
   echo "# ddev get tyler36/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get tyler36/ddev-xhgui
   ddev restart
@@ -60,15 +59,15 @@ collector_checks() {
   health_checks
 }
 
-@test "a site can be profiled" {
+@test "it can profile using the default (mariadb) database" {
   set -eu -o pipefail
   cd ${TESTDIR}
 
   # Create test site
   echo "# Create a demo website at ${TESTDIR}" >&3
+  ddev config --docroot=public --create-docroot
   ddev composer require perftools/php-profiler
   ddev composer install
-  ddev config --docroot=public --create-docroot
   echo "<?php
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
@@ -81,4 +80,65 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   # Check service works
   health_checks
   collector_checks
+
+  # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
+  ddev get --remove ${DIR}
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
+}
+
+@test "it can profile using a MySQL database" {
+  set -eu -o pipefail
+  cd ${TESTDIR}
+
+  # Create test site
+  echo "# Create a demo website at ${TESTDIR} using MySQL" >&3
+  ddev config --docroot=public --create-docroot --database=mysql:8.0
+  ddev composer require perftools/php-profiler
+  ddev composer install
+  echo "<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
+echo 'Demo website';" >${TESTDIR}/public/index.php
+
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ${DIR}
+  ddev restart
+
+  # Check service works
+  health_checks
+  collector_checks
+
+  # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
+  ddev get --remove ${DIR}
+  ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
+}
+
+@test "it can profile using a Postres database" {
+  set -eu -o pipefail
+  cd ${TESTDIR}
+
+  # Create test site
+  echo "# Create a demo website at ${TESTDIR} using Postgres" >&3
+  ddev config --docroot=public --create-docroot --database=postgres:16
+  ddev composer require perftools/php-profiler
+  ddev composer install
+  echo "<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
+echo 'Demo website';" >${TESTDIR}/public/index.php
+
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ${DIR}
+  ddev restart
+
+  # Check service works
+  health_checks
+  collector_checks
+
+  # Check it removes database on uninstall. `psql "xhgui" -c '\q'` returns 1 if db exists, 0 if missing.
+  ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." | grep "exists"
+  ddev get --remove ${DIR}
+  ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
