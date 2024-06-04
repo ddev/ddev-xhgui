@@ -9,6 +9,7 @@
   - [Drupal](#drupal)
   - [WordPress](#wordpress)
   - [Silverstripe](#silverstripe)
+  - [Others](#others)
 - [Usage](#usage)
 - [Configuration](#configuration)
 
@@ -38,19 +39,7 @@ Profiling in a production environment is not recommended.
 
 ### Drupal
 
-- Install `perftools/php-profiler`
-
-   ```shell
-   ddev composer require perftools/php-profiler --dev
-   ```
-
-- Add the following line to `web/sites/default/settings.php` to include the collector.
-
-   ```php
-   if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
-    require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
-   }
-   ```
+This addon automatically updates Drupal with the required software and configuration on install.
 
 - Run `ddev xhprof` to start profiling.
   - XHGui is now available at `https://yourproject.ddev.site:8142`
@@ -110,6 +99,27 @@ Profiling in a production environment is not recommended.
   ```
 
 - Run `ddev xhprof` to start profiling
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
+
+### Others
+
+If you want to use this addon with a different project type or manually set it up. Perform the follows steps:
+
+- Install `perftools/php-profiler`
+
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+- Add the following lines to your project's settings file to initialize the collector.
+
+   ```php
+   if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+    require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+   }
+   ```
+
+- Run `ddev xhprof` to start profiling.
   - XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ## Usage

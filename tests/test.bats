@@ -29,7 +29,7 @@ collector_checks() {
   ddev exec "curl -s xhgui:80" | grep -v '<a href="/?server_name=web">'
 
   # Profile site
-  ddev exec "curl -s web:80" | grep "Demo website"
+  ddev exec "curl -s web:80"
   sleep 5
   # Ensure there a profiling data link
   ddev exec "curl -s xhgui:80" | grep '<a href="/?server_name=web">'
@@ -141,4 +141,25 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." | grep "exists"
   ddev get --remove ${DIR}
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
+}
+
+@test "it automates Drupal setup" {
+  set -eu -o pipefail
+  cd ${TESTDIR}
+
+  # install Drupal project
+  ddev config --project-type=drupal --php-version=8.3 --docroot=web
+  ddev start
+  ddev composer create drupal/recommended-project:^10
+  ddev config --update
+  ddev composer require drush/drush
+  ddev drush site:install --account-name=admin --account-pass=admin -y
+
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ${DIR}
+  ddev restart
+
+  # Check service works
+  health_checks
+  collector_checks
 }
