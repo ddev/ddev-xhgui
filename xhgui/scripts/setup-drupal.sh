@@ -7,7 +7,7 @@ if [[ $DDEV_PROJECT_TYPE != drupal* ]] || [[ $DDEV_PROJECT_TYPE =~ ^drupal(6|7)$
   exit 0
 fi
 
-# Earlt return if disable_settings_management is true.
+# Early return if disable_settings_management is true.
 if ( ddev debug configyaml 2>/dev/null | grep 'disable_settings_management:\s*true' >/dev/null 2>&1 ) ; then
   exit 0
 fi
