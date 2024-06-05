@@ -11,5 +11,5 @@ DDEV_XHGUI_HTTPS_PORT=8142
 if [ ${DDEV_PRIMARY_URL%://*} = "https" ]; then
     ddev launch $DDEV_PRIMARY_URL:$DDEV_XHGUI_HTTPS_PORT
 else
-    ddev launch $DDEV_PRIMARY_URL::$DDEV_XHGUI_PORT
+    ddev launch $DDEV_PRIMARY_URL:$DDEV_XHGUI_PORT
 fi
