@@ -51,8 +51,8 @@ collector_checks() {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
   ddev config --project-name=${PROJNAME}
-  echo "# ddev get tyler36/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get tyler36/ddev-xhgui
+  echo "# ddev get ddev/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ddev/ddev-xhgui
   ddev restart
 
   # Check service works
