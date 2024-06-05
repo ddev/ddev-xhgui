@@ -30,7 +30,7 @@ Profiling in a production environment is not recommended.
 - Install the `ddev-xhgui` add-on:
 
   ```shell
-  ddev get tyler36/ddev-xhgui
+  ddev get ddev/ddev-xhgui
   ddev restart
   ```
 
