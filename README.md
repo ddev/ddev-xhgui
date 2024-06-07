@@ -52,9 +52,6 @@ Profiling in a production environment is not recommended.
    }
    ```
 
-- Run `ddev xhprof` to start profiling.
-  - XHGui is now available at `https://yourproject.ddev.site:8142`
-
 ### WordPress
 
 - Install `perftools/php-profiler`
@@ -81,8 +78,6 @@ Profiling in a production environment is not recommended.
    ```
 
 - Remove `#ddev-generated` from `wp-config-ddev.php` to prevent DDEV overriding it.
-- Run `ddev xhprof` to start profiling
-  - XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ### Silverstripe
 
@@ -109,19 +104,14 @@ Profiling in a production environment is not recommended.
   }
   ```
 
-- Run `ddev xhprof` to start profiling
-  - XHGui is now available at `https://yourproject.ddev.site:8142`
-
 ## Usage
-
-The service will automatically start when run: `ddev start` or `ddev restart`.
-
-By default, xhgui will be available at `https://yourproject.ddev.site:8143`.
-Use the following command to launch the xhgui in your browser:
+Run the following commands to enable profiling and then launch the XHGui in your browser.
 
 ```shell
-ddev xhgui
+ddev xhprof on && ddev xhgui
 ```
+
+By default, XHGui will be available at `https://yourproject.ddev.site:8143`.
 
 For detailed information about a single request, click on the "Method" keyword on the "Recent runs" dashboard.
 
@@ -137,9 +127,9 @@ Use the following command to check the logs:
 
 ## Configuration
 
-To configure Xhgui, update `.ddev/xhgui/xhgui.config.php`.
+To configure XhGui, update `.ddev/xhgui/xhgui.config.php`.
 
-For example, to set xhgui to use `Asia/Toyko` timezone for dates:
+For example, to set XHGui to use `Asia/Toyko` timezone for dates:
 
 - Remove `#ddev-generated` from `.ddev/xhgui/xhgui.config.php`
 - Change the timezone value
