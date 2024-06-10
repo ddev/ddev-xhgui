@@ -9,6 +9,8 @@ project_files:
 - xhgui/collector/xhgui.collector.config.php
 - xhgui/collector/xhgui.collector.php
 - xhgui/nginx.conf
+- xhgui/scripts/setup-drupal.sh
+- xhgui/scripts/settings.ddev.xhgui.php
 
 pre_install_actions:
   # Ensure we're on DDEV 1.23+. It's need for the `xhgui` command (launch by port).
@@ -16,6 +18,13 @@ pre_install_actions:
     #ddev-nodisplay
     #ddev-description:Checking DDEV version
     (ddev debug capabilities | grep corepack >/dev/null) || (echo "Please upgrade DDEV to v1.23+ to enable launching." && false)
+
+post_install_actions:
+  - |
+    #ddev-nodisplay
+    #ddev-description:Configure Drupal if applicable
+    chmod +x xhgui/scripts/setup-drupal.sh
+    xhgui/scripts/setup-drupal.sh
 
 removal_actions:
 - if [[ "$DDEV_DATABASE_FAMILY" == "postgres" ]]; then ddev psql -U db -c "drop database xhgui"; fi
