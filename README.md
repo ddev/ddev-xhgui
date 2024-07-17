@@ -6,6 +6,7 @@
 - [Warning](#warning)
 - [Getting started](#getting-started)
 - [Framework configuration](#framework-configuration)
+  - [CakePHP](#cakephp)
   - [Drupal](#drupal)
   - [Silverstripe](#silverstripe)
   - [WordPress](#wordpress)
@@ -35,6 +36,30 @@ Profiling in a production environment is not recommended.
   ```
 
 ## Framework configuration
+
+### CakePHP
+
+- Install `perftools/php-profiler`
+
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+- Add the following line to `src/Application.php` to include the collector.
+
+   ```php
+    public function bootstrap(): void
+    {
+        parent::bootstrap();
+
+        // Below is the new code to add
+        if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+            require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+        }
+   ```
+
+- Run `ddev xhprof` to start profiling.
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ### Drupal
 
@@ -82,7 +107,6 @@ Profiling in a production environment is not recommended.
 
 - Run `ddev xhprof` to start profiling
   - XHGui is now available at `https://yourproject.ddev.site:8142`
-
 
 ### WordPress
 
