@@ -22,9 +22,6 @@ teardown() {
 
 health_checks() {
   set +u # bats-assert has unset variables so turn off unset check
-  # ddev restart is required because we have done `ddev get` on a new service
-  run ddev restart
-  assert_success
   # Make sure we can hit the 8142 port successfully
   curl -s -I -f https://${PROJNAME}.ddev.site:8142 >/tmp/curlout.txt
   # Make sure `ddev xhgui` works
@@ -55,6 +52,7 @@ collector_checks() {
   ddev config --project-name=${PROJNAME}
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
+  ddev restart
 
   # Check service works
   health_checks
@@ -66,6 +64,7 @@ collector_checks() {
   ddev config --project-name=${PROJNAME}
   echo "# ddev get ddev/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ddev/ddev-xhgui
+  ddev restart
 
   # Check service works
   health_checks
@@ -87,6 +86,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
+  ddev restart
 
   # Check service works
   health_checks
@@ -114,6 +114,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
+  ddev restart
 
   # Check service works
   health_checks
@@ -141,6 +142,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
+  ddev restart
 
   # Check service works
   health_checks
@@ -158,6 +160,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   ddev config --project-name=${PROJNAME} --router-http-port=8080 --router-https-port=8443
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
+  ddev restart
 
   # Check service works
   health_checks
