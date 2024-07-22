@@ -1,5 +1,8 @@
 setup() {
   set -eu -o pipefail
+  brew_prefix=$(brew --prefix)
+  load "${brew_prefix}/lib/bats-support/load.bash"
+  load "${brew_prefix}/lib/bats-assert/load.bash"
 
   export DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )/.."
   export PROJNAME=test-ddev-xhgui
@@ -18,6 +21,14 @@ teardown() {
 }
 
 health_checks() {
+  set +u # bats-assert has unset variables so turn off unset check
+  # Make sure we can hit the 8142 port successfully
+  curl -s -I -f https://${PROJNAME}.ddev.site:8142 >/tmp/curlout.txt
+  # Make sure `ddev xhgui` works
+  DDEV_DEBUG=true run ddev xhgui
+  assert_success
+  assert_output --partial "FULLURL https://${PROJNAME}.ddev.site:8142"
+
   ddev exec "curl -s xhgui:80" | grep "XHGui - Run list"
 }
 
@@ -141,4 +152,16 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." | grep "exists"
   ddev get --remove ${DIR}
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
+}
+
+@test "install from directory with nonstandard port" {
+  set -eu -o pipefail
+  cd ${TESTDIR}
+  ddev config --project-name=${PROJNAME} --router-http-port=8080 --router-https-port=8443
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ${DIR}
+  ddev restart
+
+  # Check service works
+  health_checks
 }

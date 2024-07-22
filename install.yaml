@@ -2,6 +2,7 @@ name: xhgui
 
 project_files:
 - docker-compose.xhgui.yaml
+- docker-compose.xhgui_norouter.yaml
 - config.xhgui.yaml
 - commands/host/xhgui
 - xhgui/Dockerfile
@@ -11,11 +12,21 @@ project_files:
 - xhgui/nginx.conf
 
 pre_install_actions:
-  # Ensure we're on DDEV 1.23+. It's need for the `xhgui` command (launch by port).
+  # Ensure we're on DDEV 1.23+. It's required for the `xhgui` command (launch by port).
   - |
     #ddev-nodisplay
     #ddev-description:Checking DDEV version
     (ddev debug capabilities | grep corepack >/dev/null) || (echo "Please upgrade DDEV to v1.23+ to enable launching." && false)
+
+post_install_actions:
+  - |
+    #ddev-description:If router disabled, directly expose port
+    #
+    if ( {{ contains "ddev-router" (list .DdevGlobalConfig.omit_containers | toString) }} ); then
+      printf "#ddev-generated\nservices:\n  xhgui:\n    ports:\n      - 8143:80\n" > docker-compose.xhgui_norouter.yaml
+    fi
+  - |
+    echo "You can now use 'ddev xhgui' to launch XHGui"
 
 removal_actions:
 - if [[ "$DDEV_DATABASE_FAMILY" == "postgres" ]]; then ddev psql -U db -c "drop database xhgui"; fi
