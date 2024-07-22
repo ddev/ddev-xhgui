@@ -6,9 +6,10 @@
 - [Warning](#warning)
 - [Getting started](#getting-started)
 - [Framework configuration](#framework-configuration)
+  - [CakePHP](#cakephp)
   - [Drupal](#drupal)
-  - [WordPress](#wordpress)
   - [Silverstripe](#silverstripe)
+  - [WordPress](#wordpress)
 - [Usage](#usage)
 - [Configuration](#configuration)
 
@@ -36,6 +37,30 @@ Profiling in a production environment is not recommended.
 
 ## Framework configuration
 
+### CakePHP
+
+- Install `perftools/php-profiler`
+
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+- Add the following line to `src/Application.php` to include the collector.
+
+   ```php
+    public function bootstrap(): void
+    {
+        parent::bootstrap();
+
+        // Below is the new code to add
+        if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+            require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+        }
+   ```
+
+- Run `ddev xhprof` to start profiling.
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
+
 ### Drupal
 
 - Install `perftools/php-profiler`
@@ -53,6 +78,34 @@ Profiling in a production environment is not recommended.
    ```
 
 - Run `ddev xhprof` to start profiling.
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
+
+### Silverstripe
+
+- Install `perftools/php-profiler`
+
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+- Add the following line to `public/index.php`, right after the autoload includes, to include the collector.
+
+  ```php
+  if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+  } elseif (file_exists(__DIR__ . '/vendor/autoload.php')) {
+      require __DIR__ . '/vendor/autoload.php';
+  } else {
+      header('HTTP/1.1 500 Internal Server Error');
+      echo "autoload.php not found";
+      exit(1);
+  }
+  if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+   require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+  }
+  ```
+
+- Run `ddev xhprof` to start profiling
   - XHGui is now available at `https://yourproject.ddev.site:8142`
 
 ### WordPress
@@ -81,34 +134,6 @@ Profiling in a production environment is not recommended.
    ```
 
 - Remove `#ddev-generated` from `wp-config-ddev.php` to prevent DDEV overriding it.
-- Run `ddev xhprof` to start profiling
-  - XHGui is now available at `https://yourproject.ddev.site:8142`
-
-### Silverstripe
-
-- Install `perftools/php-profiler`
-
-   ```shell
-   ddev composer require perftools/php-profiler --dev
-   ```
-
-- Add the following line to `public/index.php`, right after the autoload includes, to include the collector.
-
-  ```php
-  if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
-    require __DIR__ . '/../vendor/autoload.php';
-  } elseif (file_exists(__DIR__ . '/vendor/autoload.php')) {
-      require __DIR__ . '/vendor/autoload.php';
-  } else {
-      header('HTTP/1.1 500 Internal Server Error');
-      echo "autoload.php not found";
-      exit(1);
-  }
-  if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
-   require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
-  }
-  ```
-
 - Run `ddev xhprof` to start profiling
   - XHGui is now available at `https://yourproject.ddev.site:8142`
 
