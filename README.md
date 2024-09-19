@@ -120,14 +120,13 @@ Profiling in a production environment is not recommended.
   - If using vanilla WordPress:
 
    ```shell
-   wget https://github.com/perftools/php-profiler/archive/refs/tags/0.18.0.tar.gz
-   tar -xvf 0.18.0.tar.gz
+   git clone https://github.com/perftools/php-profiler.git
    ```
 
 - Add the following line to `wp-config-ddev.php` to include the collector.
 
    ```php
-   require_once __DIR__ . '/php-profiler-0.18.0/autoload.php';
+   require_once __DIR__ . '/php-profiler/autoload.php';
    if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
      require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
    }
