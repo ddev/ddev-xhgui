@@ -30,8 +30,21 @@ Profiling in a production environment is not recommended.
 
 - Install the `ddev-xhgui` add-on:
 
+  For DDEV v1.23.5 or above run
+
+  ```shell
+  ddev add-on get ddev/ddev-xhgui
+  ```
+
+  For earlier versions of DDEV run
+
   ```shell
   ddev get ddev/ddev-xhgui
+  ```
+
+  Then restart your project
+
+  ```shell
   ddev restart
   ```
 
