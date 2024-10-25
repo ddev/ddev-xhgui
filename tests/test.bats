@@ -94,7 +94,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
-  ddev add-on get --remove ${DIR}
+  ddev add-on remove ${DIR}
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
@@ -122,7 +122,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
-  ddev add-on get --remove ${DIR}
+  ddev add-on remove ${DIR}
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
@@ -150,7 +150,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Check it removes database on uninstall. `psql "xhgui" -c '\q'` returns 1 if db exists, 0 if missing.
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." | grep "exists"
-  ddev add-on get --remove ${DIR}
+  ddev add-on remove ${DIR}
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
