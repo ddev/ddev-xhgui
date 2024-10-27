@@ -50,8 +50,8 @@ collector_checks() {
   set -eu -o pipefail
   cd ${TESTDIR}
   ddev config --project-name=${PROJNAME}
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ${DIR}
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get ${DIR}
   ddev restart
 
   # Check service works
@@ -62,8 +62,8 @@ collector_checks() {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
   ddev config --project-name=${PROJNAME}
-  echo "# ddev get ddev/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ddev/ddev-xhgui
+  echo "# ddev add-on get ddev/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get ddev/ddev-xhgui
   ddev restart
 
   # Check service works
@@ -84,8 +84,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
 echo 'Demo website';" >${TESTDIR}/public/index.php
 
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ${DIR}
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get ${DIR}
   ddev restart
 
   # Check service works
@@ -94,7 +94,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
-  ddev get --remove ${DIR}
+  ddev add-on remove ${DIR}
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
@@ -112,8 +112,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
 echo 'Demo website';" >${TESTDIR}/public/index.php
 
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ${DIR}
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get ${DIR}
   ddev restart
 
   # Check service works
@@ -122,7 +122,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Check it removes database on uninstall. 'mysql "name"' returns 1 if db exists, 0 if missing.
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." | grep "exists"
-  ddev get --remove ${DIR}
+  ddev add-on remove ${DIR}
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
@@ -140,8 +140,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
 echo 'Demo website';" >${TESTDIR}/public/index.php
 
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ${DIR}
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get ${DIR}
   ddev restart
 
   # Check service works
@@ -150,7 +150,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Check it removes database on uninstall. `psql "xhgui" -c '\q'` returns 1 if db exists, 0 if missing.
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." | grep "exists"
-  ddev get --remove ${DIR}
+  ddev add-on remove ${DIR}
   ddev psql "xhgui" -c '\q' > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
@@ -158,8 +158,8 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   set -eu -o pipefail
   cd ${TESTDIR}
   ddev config --project-name=${PROJNAME} --router-http-port=8080 --router-https-port=8443
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ${DIR}
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get ${DIR}
   ddev restart
 
   # Check service works
