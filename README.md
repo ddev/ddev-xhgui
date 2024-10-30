@@ -8,6 +8,7 @@
 - [Framework configuration](#framework-configuration)
   - [CakePHP](#cakephp)
   - [Drupal](#drupal)
+  - [OpenMage](#openmage)
   - [Silverstripe](#silverstripe)
   - [WordPress](#wordpress)
 - [Usage](#usage)
@@ -83,6 +84,25 @@ Profiling in a production environment is not recommended.
    ```
 
 - Add the following line to `web/sites/default/settings.php` to include the collector.
+
+   ```php
+   if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+    require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+   }
+   ```
+
+- Run `ddev xhprof` to start profiling.
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
+
+### OpenMage
+
+- Install `perftools/php-profiler`
+
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+- Add the following line to `app/Mage.php`, right after the "AUTOLOADER PATCH", to include the collector.
 
    ```php
    if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
