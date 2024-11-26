@@ -8,6 +8,7 @@
 - [Framework configuration](#framework-configuration)
   - [CakePHP](#cakephp)
   - [Drupal](#drupal)
+  - [Laravel](#laravel)
   - [OpenMage](#openmage)
   - [Silverstripe](#silverstripe)
   - [WordPress](#wordpress)
@@ -89,6 +90,28 @@ Profiling in a production environment is not recommended.
    if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
     require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
    }
+   ```
+
+- Run `ddev xhprof` to start profiling.
+  - XHGui is now available at `https://yourproject.ddev.site:8142`
+
+### Laravel
+
+- Install `perftools/php-profiler`
+
+   ```shell
+   ddev composer require perftools/php-profiler --dev
+   ```
+
+- Add the following line to `app/Providers/AppServiceProvider.php` to include the collector.
+
+   ```php
+    public function boot(): void
+    {
+        if (file_exists("/mnt/ddev_config/xhgui/collector/xhgui.collector.php")) {
+            require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
+        }
+        ...
    ```
 
 - Run `ddev xhprof` to start profiling.
