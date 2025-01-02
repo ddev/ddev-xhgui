@@ -8,6 +8,7 @@ project_files:
 - config.xhgui.yaml
 - commands/host/xhgui
 - web-build/Dockerfile.xhgui
+- xhgui_prepend.php
 - xhgui/Dockerfile
 - xhgui/xhgui.config.php
 - xhgui/collector/xhgui.collector.config.php
