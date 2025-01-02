@@ -10,11 +10,16 @@ hooks:
       fi
     service: db
   - exec: |
-      cat <<-EOF > .ddev/xhprof/xhprof_prepend.php
+      cat <<-'EOF' > .ddev/xhprof/xhprof_prepend.php
       <?php
       // DDEV's built in xhprof handler breaks our own.
       // We'll temporarily override it here, but return control back later.
       // If you don't want this behavior, comment out the hooks in ".ddev/config.xhgui.yaml".
+      $homeDir = getenv('HOME');
+      $globalAutoload = $homeDir . '/.composer/vendor/autoload.php';
+      if (file_exists($globalAutoload)) {
+        require_once $globalAutoload;
+      }
       return;
       EOF
   pre-stop:

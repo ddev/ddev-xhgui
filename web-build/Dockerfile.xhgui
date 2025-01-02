@@ -1,0 +1,5 @@
+#ddev-generated
+# Globally composer-install php-profiler with current php and composer
+USER ${username}
+RUN composer global require perftools/php-profiler
+USER root
