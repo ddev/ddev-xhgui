@@ -23,11 +23,6 @@ hooks:
       } else {
         error_log("Global autoloader not found at: $globalAutoload");
       }
-      use Xhgui\Profiler\Profiler;
-      if (!extension_loaded('xhprof')) {
-        error_log("xhprof extension not loaded.");
-        return;
-      }
       EOF
   - exec: |
       cat <<-'EOF' >> /var/www/html/${DDEV_DOCROOT}/sites/default/settings.ddev.php
@@ -35,7 +30,7 @@ hooks:
         require_once "/mnt/ddev_config/xhgui/collector/xhgui.collector.php";
       }
       EOF
-    
+
 pre-stop:
   - exec: |
       cat <<-EOF > .ddev/xhprof/xhprof_prepend.php
