@@ -13,9 +13,8 @@ $XHGUI_PDO_DSN = $DDEV_DATABASE_FAMILY === 'postgres'
     : "$DDEV_DATABASE_FAMILY:host=db;dbname=xhgui";
 
 return [
-    // Which backend to use for Xhgui_Saver.
-    // Must be one of 'mongodb', or 'pdo'.
-    'save.handler' => getenv('XHGUI_SAVE_HANDLER') ?: 'mongodb',
+    // Always 'pdo'.
+    'save.handler' => getenv('XHGUI_SAVE_HANDLER') ?: 'pdo',
 
     // Database options for PDO.
     'pdo' => [
@@ -24,28 +23,6 @@ return [
         'pass' => getenv('XHGUI_PDO_PASS') ?: 'db',
         'table' => getenv('XHGUI_PDO_TABLE') ?: 'results',
         'tableWatch' => getenv('XHGUI_PDO_TABLE_WATCHES') ?: 'watches',
-    ],
-
-    // Database options for MongoDB.
-    'mongodb' => [
-        // 'hostname' and 'port' are used to build DSN for MongoClient
-        'hostname' => getenv('XHGUI_MONGO_HOSTNAME') ?: 'xhgui-mongo',
-        'port' => getenv('XHGUI_MONGO_PORT') ?: 27017,
-        // The database name
-        'database' => getenv('XHGUI_MONGO_DATABASE') ?: 'xhprof',
-        // Additional options for the MongoClient constructor,
-        // for example 'username', 'password', or 'replicaSet'.
-        // See <https://www.php.net/mongoclient_construct#options>.
-        'options' => [
-            /*
-            'username' => getenv('XHGUI_MONGO_USERNAME') ?: null,
-            'password' => getenv('XHGUI_MONGO_PASSWORD') ?: null,
-            */
-        ],
-        // An array of options for the MongoDB driver.
-        // Options include setting connection context options for SSL or logging callbacks.
-        // See <https://www.php.net/mongoclient_construct#options>.
-        'driverOptions' => [],
     ],
 
     'run.view.filter.names' => [
