@@ -10,11 +10,11 @@ hooks:
       fi
     service: db
   - exec: |
-      cp .ddev/xhgui_prepend.php .ddev/xhprof/xhprof_prepend.php
+      cp /var/www/html/.ddev/xhgui_prepend.php /var/www/html/.ddev/xhprof/xhprof_prepend.php
 
-pre-stop:
+  pre-stop:
   - exec: |
-      cat <<-EOF > .ddev/xhprof/xhprof_prepend.php
+      cat <<-EOF > /var/www/html/.ddev/xhprof/xhprof_prepend.php
       <?php
       // #ddev-generated
       // We'll give back control of this file to DDEV. Next time it checks, it will see it has ownership
