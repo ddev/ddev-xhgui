@@ -1,5 +1,7 @@
 name: xhgui
 
+ddev_version_constraint: ">=v1.24.0"
+
 project_files:
 - docker-compose.xhgui.yaml
 - docker-compose.xhgui_norouter.yaml
@@ -10,13 +12,6 @@ project_files:
 - xhgui/collector/xhgui.collector.config.php
 - xhgui/collector/xhgui.collector.php
 - xhgui/nginx.conf
-
-pre_install_actions:
-  # Ensure we're on DDEV 1.23+. It's required for the `xhgui` command (launch by port).
-  - |
-    #ddev-nodisplay
-    #ddev-description:Checking DDEV version
-    (ddev debug capabilities | grep corepack >/dev/null) || (echo "Please upgrade DDEV to v1.23+ to enable launching." && false)
 
 post_install_actions:
   - |
