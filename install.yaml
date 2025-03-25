@@ -1,24 +1,25 @@
 name: xhgui
 
-ddev_version_constraint: ">=v1.24.0"
+# This add-on is a part of DDEV since v1.24.4
+ddev_version_constraint: ">=1.24.0-0, <1.24.4-0"
 
 project_files:
-- docker-compose.xhgui.yaml
-- docker-compose.xhgui_norouter.yaml
-- config.xhgui.yaml
-- commands/host/xhgui
-- web-build/Dockerfile.xhgui
-- xhgui_prepend.php
-- xhgui/Dockerfile
-- xhgui/xhgui.config.php
-- xhgui/collector/xhgui.collector.config.php
-- xhgui/collector/xhgui.collector.php
-- xhgui/nginx.conf
+  - docker-compose.xhgui.yaml
+  - docker-compose.xhgui_norouter.yaml
+  - config.xhgui.yaml
+  - commands/host/xhgui
+  - web-build/Dockerfile.xhgui
+  - xhgui_prepend.php
+  - xhgui/Dockerfile
+  - xhgui/xhgui.config.php
+  - xhgui/collector/xhgui.collector.config.php
+  - xhgui/collector/xhgui.collector.php
+  - xhgui/nginx.conf
 
 post_install_actions:
   - |
+    #ddev-nodisplay
     #ddev-description:If router disabled, directly expose port
-    #
     if ( {{ contains "ddev-router" (list .DdevGlobalConfig.omit_containers | toString) }} ); then
       printf "#ddev-generated\nservices:\n  xhgui:\n    ports:\n      - 8143:80\n" > docker-compose.xhgui_norouter.yaml
     fi
@@ -26,5 +27,5 @@ post_install_actions:
     echo "You can now use 'ddev xhgui' to launch XHGui"
 
 removal_actions:
-- if [[ "$DDEV_DATABASE_FAMILY" == "postgres" ]]; then ddev psql -U db -c "drop database xhgui"; fi
-- if [[ "$DDEV_DATABASE_FAMILY" != "postgres" ]]; then ddev mysql -uroot -proot -e "DROP DATABASE IF EXISTS xhgui"; fi
+  - if [[ "$DDEV_DATABASE_FAMILY" == "postgres" ]]; then ddev psql -U db -c "drop database xhgui"; fi
+  - if [[ "$DDEV_DATABASE_FAMILY" != "postgres" ]]; then ddev mysql -uroot -proot -e "DROP DATABASE IF EXISTS xhgui"; fi
