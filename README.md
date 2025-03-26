@@ -1,18 +1,16 @@
-[![tests](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml/badge.svg)](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2026.svg)
+[![tests](https://github.com/ddev/ddev-xhgui/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ddev/ddev-xhgui/actions/workflows/tests.yml?query=branch%3Amain)
+[![project is obsolete](https://img.shields.io/badge/maintenance-obsolete-red.svg)](https://github.com/ddev/ddev-xhgui/commits)
+[![release](https://img.shields.io/github/v/release/ddev/ddev-xhgui)](https://github.com/ddev/ddev-xhgui/releases/latest)
 
-# ddev-xhgui <!-- omit in toc -->
+# DDEV XHGui (obsolete)
 
-- [Introduction](#introduction)
-- [Warning](#warning)
-- [Getting started](#getting-started)
-- [Usage](#usage)
-- [Configuration](#configuration)
+This add-on is a part of DDEV since [v1.24.4](https://github.com/ddev/ddev/releases/tag/v1.24.4).
 
-## Introduction
+## Overview
 
-This addon adds the XHGui service to a project served by DDEV.
+[XHGui](https://github.com/perftools/xhgui) is a graphical interface for XHProf profiling data that stores its results the database.
 
-[XhGui](https://github.com/perftools/xhgui) is a graphical interface for XHProf profiling data that stores its results the database.
+This add-on integrates XHGui into your [DDEV](https://ddev.com/) project.
 
 See <https://performance.wikimedia.org/xhgui/> for an demonstration of XHGui data collection.
 
@@ -21,13 +19,14 @@ See <https://performance.wikimedia.org/xhgui/> for an demonstration of XHGui dat
 This addon is for debugging in a development environment.
 Profiling in a production environment is not recommended.
 
-## Getting started
+## Installation
 
-- Install the `ddev-xhgui` add-on and restart your project
-
-```shell
-  ddev add-on get ddev/ddev-xhgui && ddev restart
+```sh
+ddev add-on get ddev/ddev-xhgui
+ddev restart
 ```
+
+After installation, make sure to commit the `.ddev` directory to version control.
 
 ## Usage
 
@@ -41,13 +40,13 @@ For detailed information about a single request, click on the "Method" keyword o
 
 To check the xhgui service's logs:
 
-   ```shell
-   ddev logs -s xhgui
-   ```
+```sh
+ddev logs -s xhgui
+```
 
-## Configuration
+## Advanced Customization
 
-To configure Xhgui, add `.ddev/xhgui/xhgui.config.php`.
+To configure XHGui, add `.ddev/xhgui/xhgui.config.php`.
 
 For example, to set xhgui to use `Asia/Toyko` timezone for dates:
 
@@ -55,8 +54,10 @@ For example, to set xhgui to use `Asia/Toyko` timezone for dates:
 - Change the timezone value
 
   ```php
-    'timezone' => 'Asia/Tokyo',
-    'date.format' => 'Y-m-d H:i:s',
+  'timezone' => 'Asia/Tokyo',
+  'date.format' => 'Y-m-d H:i:s',
   ```
+
+## Credits
 
 **Contributed and maintained by [@tyler36](https://github.com/tyler36) based on the original [ddev-contrib PR](https://github.com/ddev/ddev-contrib/pull/128) by [@penyaskito](https://github.com/penyaskito)**

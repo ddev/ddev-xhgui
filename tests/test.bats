@@ -1,23 +1,45 @@
+#!/usr/bin/env bats
+
+# Bats is a testing framework for Bash
+# Documentation https://bats-core.readthedocs.io/en/stable/
+# Bats libraries documentation https://github.com/ztombol/bats-docs
+
+# For local tests, install bats-core, bats-assert, bats-file, bats-support
+# And run this in the add-on root directory:
+#   bats ./tests/test.bats
+# To exclude release tests:
+#   bats ./tests/test.bats --filter-tags '!release'
+# For debugging:
+#   bats ./tests/test.bats --show-output-of-passing-tests --verbose-run --print-output-on-failure
+
 setup() {
   set -eu -o pipefail
-  brew_prefix=$(brew --prefix)
-  load "${brew_prefix}/lib/bats-support/load.bash"
-  load "${brew_prefix}/lib/bats-assert/load.bash"
 
-  export DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )/.."
-  export PROJNAME=test-ddev-xhgui
-  export TESTDIR=~/tmp/${PROJNAME}
-  mkdir -p $TESTDIR
-  export DDEV_NON_INTERACTIVE=true
-  ddev delete -Oy ${PROJNAME} || true
+  # Override this variable for your add-on:
+  export GITHUB_REPO=ddev/ddev-xhgui
+
+  TEST_BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
+  export BATS_LIB_PATH="${BATS_LIB_PATH}:${TEST_BREW_PREFIX}/lib:/usr/lib/bats"
+  bats_load_library bats-assert
+  bats_load_library bats-file
+  bats_load_library bats-support
+
+  export DIR="$(cd "$(dirname "${BATS_TEST_FILENAME}")/.." >/dev/null 2>&1 && pwd)"
+  export PROJNAME="test-$(basename "${GITHUB_REPO}")"
+  mkdir -p ~/tmp
+  export TESTDIR=$(mktemp -d ~/tmp/${PROJNAME}.XXXXXX)
+  export DDEV_NONINTERACTIVE=true
+  export DDEV_NO_INSTRUMENTATION=true
+  ddev delete -Oy "${PROJNAME}" >/dev/null 2>&1 || true
   cd "${TESTDIR}"
-}
 
-teardown() {
-  set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  ddev delete -Oy ${PROJNAME}
-  [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+  # This add-on is a part of DDEV since v1.24.4
+  if [[ "$(ddev --version)" != "ddev version v1.24.3" ]]; then
+    skip "This add-on is not intended to work with $(ddev --version)"
+  fi
+
+  run ddev config --project-name="${PROJNAME}" --project-tld=ddev.site
+  assert_success
 }
 
 health_checks() {
@@ -46,32 +68,34 @@ collector_checks() {
   ddev exec "curl -s xhgui:80" | grep '<a href="/?server_name=web">'
 }
 
+teardown() {
+  set -eu -o pipefail
+  ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
+  [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+}
+
 @test "install from directory" {
   set -eu -o pipefail
-  cd ${TESTDIR}
-  ddev config --project-name=${PROJNAME}
-  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ${DIR}
-  ddev restart
-
-  # Check service works
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
   health_checks
 }
 
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  ddev config --project-name=${PROJNAME}
-  echo "# ddev add-on get ddev/ddev-xhgui with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ddev/ddev-xhgui
-  ddev restart
-
-  # Check service works
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${GITHUB_REPO}"
+  assert_success
+  run ddev restart -y
+  assert_success
   health_checks
 }
 
-@test "it can profile using the default (mariadb) database" {
+@test "it can profile using the default (MariaDB) database" {
   set -eu -o pipefail
   cd ${TESTDIR}
 
@@ -85,9 +109,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
 echo 'Demo website';" >${TESTDIR}/public/index.php
 
-  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ${DIR}
-  ddev restart
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
 
   # Check service works
   health_checks
@@ -101,7 +127,6 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
 @test "it can profile using a MySQL database" {
   set -eu -o pipefail
-  cd ${TESTDIR}
 
   # Create test site
   echo "# Create a demo website at ${TESTDIR} using MySQL" >&3
@@ -113,9 +138,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
 echo 'Demo website';" >${TESTDIR}/public/index.php
 
-  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ${DIR}
-  ddev restart
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
 
   # Check service works
   health_checks
@@ -127,9 +154,8 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
   ddev mysql "xhgui" -e exit > /dev/null 2>&1 && echo "Database exists." || echo "Database missing" | grep "missing"
 }
 
-@test "it can profile using a Postres database" {
+@test "it can profile using a Postgres database" {
   set -eu -o pipefail
-  cd ${TESTDIR}
 
   # Create test site
   echo "# Create a demo website at ${TESTDIR} using Postgres" >&3
@@ -141,9 +167,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once '/mnt/ddev_config/xhgui/collector/xhgui.collector.php';
 echo 'Demo website';" >${TESTDIR}/public/index.php
 
-  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ${DIR}
-  ddev restart
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
 
   # Check service works
   health_checks
@@ -157,11 +185,13 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
 @test "install from directory with nonstandard port" {
   set -eu -o pipefail
-  cd ${TESTDIR}
   ddev config --project-name=${PROJNAME} --router-http-port=8080 --router-https-port=8443
-  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ${DIR}
-  ddev restart
+
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
 
   # Check service works
   health_checks
