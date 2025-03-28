@@ -48,7 +48,7 @@ ddev logs -s xhgui
 
 To configure XHGui, add `.ddev/xhgui/xhgui.config.php`.
 
-For example, to set xhgui to use `Asia/Toyko` timezone for dates:
+For example, to set xhgui to use `Asia/Tokyo` timezone for dates:
 
 - Remove `#ddev-generated` from `.ddev/xhgui/xhgui.config.php`
 - Change the timezone value
