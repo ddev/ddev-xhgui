@@ -101,7 +101,7 @@ teardown() {
 
   # Create test site
   echo "# Create a demo website at ${TESTDIR}" >&3
-  ddev config --docroot=public --create-docroot
+  ddev config --docroot=public
   ddev composer require perftools/php-profiler
   ddev composer install
   echo "<?php
@@ -130,7 +130,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Create test site
   echo "# Create a demo website at ${TESTDIR} using MySQL" >&3
-  ddev config --docroot=public --create-docroot --database=mysql:8.0
+  ddev config --docroot=public --database=mysql:8.0
   ddev composer require perftools/php-profiler
   ddev composer install
   echo "<?php
@@ -159,7 +159,7 @@ echo 'Demo website';" >${TESTDIR}/public/index.php
 
   # Create test site
   echo "# Create a demo website at ${TESTDIR} using Postgres" >&3
-  ddev config --docroot=public --create-docroot --database=postgres:16
+  ddev config --docroot=public --database=postgres:16
   ddev composer require perftools/php-profiler
   ddev composer install
   echo "<?php

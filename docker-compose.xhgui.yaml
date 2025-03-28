@@ -3,12 +3,13 @@ services:
   xhgui:
     # https://hub.docker.com/r/xhgui/xhgui/tags
     build:
-      dockerfile: Dockerfile
-      context: xhgui
+      dockerfile_inline: |
+        FROM xhgui/xhgui:0.23.0
+        RUN echo 'memory_limit=512M' >> $$PHP_INI_DIR/conf.d/99-memory-limit.ini
     container_name: ddev-${DDEV_SITENAME}-xhgui
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
-      com.ddev.approot: $DDEV_APPROOT
+      com.ddev.approot: ${DDEV_APPROOT}
     restart: always
     volumes:
       - ./xhgui/nginx.conf:/etc/nginx/http.d/default.conf:ro
