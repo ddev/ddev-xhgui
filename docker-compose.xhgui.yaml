@@ -4,7 +4,7 @@ services:
     # https://hub.docker.com/r/xhgui/xhgui/tags
     build:
       dockerfile_inline: |
-        FROM xhgui/xhgui:0.23.0
+        FROM xhgui/xhgui:0.23.2
         RUN echo 'memory_limit=512M' >> $$PHP_INI_DIR/conf.d/99-memory-limit.ini
     container_name: ddev-${DDEV_SITENAME}-xhgui
     labels:
