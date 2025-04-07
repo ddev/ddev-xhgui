@@ -2,9 +2,11 @@
 [![project is obsolete](https://img.shields.io/badge/maintenance-obsolete-red.svg)](https://github.com/ddev/ddev-xhgui/commits)
 [![release](https://img.shields.io/github/v/release/ddev/ddev-xhgui)](https://github.com/ddev/ddev-xhgui/releases/latest)
 
-# DDEV XHGui (obsolete)
+# DDEV XHGui (obsolete and archived)
 
-This add-on is a part of DDEV since [v1.24.4](https://github.com/ddev/ddev/releases/tag/v1.24.4).
+This add-on is a part of DDEV since [v1.24.4](https://github.com/ddev/ddev/releases/tag/v1.24.4). Use the regular `ddev xhgui` feature to use it, see [docs](https://ddev.readthedocs.io/en/stable/users/debugging-profiling/xhprof-profiling/#simplest-xhprof-usage-with-xhgui) and [XHGui Feature Makes Profiling Even Easier](https://ddev.com/blog/xhgui-feature).
+
+This add-on is archived.
 
 ## Overview
 
